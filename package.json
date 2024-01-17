@@ -1,0 +1,17 @@
+{
+  "name": "test",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "AWS_PROFILE=tobisk sst deploy --stage prod"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.2",
+    "aws-cdk-lib": "2.110.1",
+    "constructs": "10.3.0",
+    "sst": "^2.39.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {}
+}

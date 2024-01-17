@@ -1,0 +1,11 @@
+{
+  "name": "nodejs-example-logs-api-extension",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@opentelemetry/api-logs": "^0.47.0",
+    "@opentelemetry/semantic-conventions": "^1.20.0",
+    "node-fetch-commonjs": "^3.3.2"
+  }
+}
