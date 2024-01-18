@@ -9,8 +9,6 @@ const EventType = {
   SHUTDOWN: "SHUTDOWN",
 };
 
-const FUNCTION_NAME = process.env.AWS_LAMBDA_FUNCTION_NAME;
-
 // Subscribe to platform logs and receive them on ${local_ip}:4243 via HTTP protocol.
 const RECEIVER_PORT = 4243;
 
