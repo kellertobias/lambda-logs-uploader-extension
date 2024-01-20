@@ -14,7 +14,9 @@ const RECEIVER_PORT = 4243;
 
 (async function main() {
   function handleShutdown(event) {
-    console.log("shutdown", { event });
+    if (process.env.JSON_LOGS_DEBUG) {
+      console.log("shutdown", { event });
+    }
     process.exit(0);
   }
 
@@ -22,7 +24,9 @@ const RECEIVER_PORT = 4243;
   process.on("SIGTERM", () => handleShutdown("SIGTERM"));
 
   const extensionId = await register();
-  console.log(`${__dirname} extension: registered ${extensionId}`);
+  if (process.env.JSON_LOGS_DEBUG) {
+    console.log(`${__dirname} extension: registered ${extensionId}`);
+  }
 
   // listen returns `logsQueue`, a mutable array that collects logs received from Logs API
   const { logsQueue, server } = listen("sandbox", RECEIVER_PORT);
@@ -33,14 +37,18 @@ const RECEIVER_PORT = 4243;
   // function for processing collected logs
   async function handleLogs() {
     while (logsQueue.length > 0) {
-      console.log("handleLogs", logsQueue.length);
+      if (process.env.JSON_LOGS_DEBUG) {
+        console.log("handleLogs", logsQueue.length);
+      }
       await uploadLogs(logsQueue.splice(0));
     }
   }
 
   // execute extensions logic
   while (true) {
-    console.log(`${__dirname} extension: next`);
+    if (process.env.JSON_LOGS_DEBUG) {
+      console.log(`${__dirname} extension: next`);
+    }
     const event = await next(extensionId);
 
     switch (event.eventType) {

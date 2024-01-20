@@ -22,14 +22,18 @@ function listen(address, port) {
         response.end("OK");
       });
     } else {
-      console.log("GET");
+      if (process.env.JSON_LOGS_DEBUG) {
+        console.log("GET");
+      }
       response.writeHead(200, {});
       response.end("OK");
     }
   });
 
   server.listen(port, address);
-  console.log(`Listening for logs at http://${address}:${port}`);
+  if (process.env.JSON_LOGS_DEBUG) {
+    console.log(`Listening for logs at http://${address}:${port}`);
+  }
   return { logsQueue, server };
 }
 

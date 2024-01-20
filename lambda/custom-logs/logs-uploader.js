@@ -19,7 +19,9 @@ const resources = {
 
 const logsEndpoint =
   process.env.JSON_LOGS_ENDPOINT || "http://localhost:4318/logs/json";
-console.log("logsEndpoint", logsEndpoint);
+if (process.env.JSON_LOGS_DEBUG) {
+  console.log("logsEndpoint", logsEndpoint);
+}
 
 const maybeParseJson = (str, fallback = {}) => {
   try {
@@ -69,16 +71,22 @@ const uploadLogs = async (logs) => {
     })
     .map((log) => ({ ...extractLog(log), resources }));
 
-  await fetch(logsEndpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...extraHeaders,
-    },
-    body: JSON.stringify(mappedLogs),
-  });
+  try {
+    await fetch(logsEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...extraHeaders,
+      },
+      body: JSON.stringify(mappedLogs),
+    });
+  } catch (e) {
+    console.error(e);
+  }
 
-  console.log("Logs Emitted");
+  if (process.env.JSON_LOGS_DEBUG) {
+    console.log("Logs Emitted");
+  }
 };
 
 module.exports = {
