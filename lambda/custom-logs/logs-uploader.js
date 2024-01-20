@@ -1,3 +1,4 @@
+const fetch = require("node-fetch-commonjs");
 const { SeverityNumber } = require("@opentelemetry/api-logs");
 const {
   SemanticResourceAttributes,
